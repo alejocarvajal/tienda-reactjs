@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Session;
 
-class RegisterClientRequest extends FormRequest
+class RegisterPaymentMethodRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,12 +28,10 @@ class RegisterClientRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'lastname' => 'required',
-            'email' => 'required|email',
-            'password' => 'required',
-            'cellphone' => 'required|integer',
-            'address' => 'required',
+            'creditcard_name' => 'required',
+            'creditcard_number' => 'required',
+            'creditcard_code' => 'required',
+            'creditcard_date' => 'required'
         ];
     }
     /**
@@ -44,13 +42,10 @@ class RegisterClientRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'El campo es obligatorio.',
-            'lastname.required' => 'El campo es obligatorio.',
-            'email.required' => 'El campo es obligatorio.',
-            'email.email' => 'Ingrese un email válido.',
-            'password.required' => 'El campo es obligatorio.',
-            'cellphone.required' => 'El campo es obligatorio.',
-            'address.required' => 'El campo es obligatorio.',
+            'creditcard_name.required' => 'El campo es obligatorio.',
+            'creditcard_number.required' => 'El campo es obligatorio.',
+            'creditcard_code.required' => 'El campo es obligatorio.',
+            'creditcard_date.required' => 'El campo es obligatorio.'
         ];
     }
 }

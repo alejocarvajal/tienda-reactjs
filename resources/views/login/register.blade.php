@@ -13,7 +13,7 @@
         </div>
         <div class="form-group">
             <label for="lastname">Apellidos*</label>
-            <input type="text" class="@error('lastname') is-invalid @enderror form-control" id="password"
+            <input type="text" class="@error('lastname') is-invalid @enderror form-control" id="lastname"
                    placeholder="Apellidos" name="lastname" value="{{ old('lastname') }}">
             @error('lastname')
             <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>

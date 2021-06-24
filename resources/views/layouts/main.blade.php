@@ -25,16 +25,15 @@
 <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
     <h5 class="my-0 mr-md-auto font-weight-normal">{{ config('app.name', 'TIENDA REACTJS') }}</h5>
     <nav class="my-2 my-md-0 mr-md-3">
-        <a class="p-2 text-dark" href="#">Features</a>
-        <a class="p-2 text-dark" href="#">Enterprise</a>
-        <a class="p-2 text-dark" href="#">Support</a>
         <a class="p-2 text-dark" href="{{ route('buyState') }}">Estado de Compra</a>
+        <a class="p-2 text-dark" href="#">Carrito de compra</a>
     </nav>
     @if(!session()->has('login'))
         <a class="btn btn-outline-primary" href="#">Invitado</a>
         <a class="btn btn-outline-success" href="{{ route('login') }}">Login</a>
         <a class="btn btn-outline-success" href="{{ route('register') }}">Registrarme</a>
     @else
+        <a class="p-2 text-dark" href="{{ route('registerPaymentMethod') }}">Registrar método de pago</a>
         <a class="p-2 text-dark" href="#">Hola {{session('email')}}!</a>
         <a class="p-2 text-dark" href="{{route('logout')}}">Cerrar sesión</a>
     @endif
@@ -47,9 +46,8 @@
 
     <footer class="pt-4 my-md-5 pt-md-5 border-top">
         <div class="row">
-            <div class="col-12 col-md">
-                <img class="mb-2" src="../assets/brand/bootstrap-solid.svg" alt="" width="24" height="24">
-                <small class="d-block mb-3 text-muted">&copy; 2017-2021</small>
+            <div class="col-12 col-md justify-content-center">
+                <small class="d-block mb-3 text-muted">&copy; Todos los derechos reservados. {{ config('app.name', 'TIENDA REACTJS') }}</small>
             </div>
     </footer>
 </div>

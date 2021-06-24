@@ -24,6 +24,10 @@ Route::get('/logout', 'Client\ClientController@logout')->name('logout');
 Route::get('/register', 'Client\ClientController@register')->name('register');
 Route::post('/register', 'Client\ClientController@save')->name('register');
 
+//Payment Method routes
+Route::get('/registerPaymentMethod', 'PaymentMethod\PaymentMethodController@register')->name('registerPaymentMethod');
+Route::post('/registerPaymentMethod', 'PaymentMethod\PaymentMethodController@save')->name('registerPaymentMethod');
+
 //buyState routes
 Route::get('/buyState', 'buyState\BuyStateController@index')->name('buyState');
 Route::post('/buyState/getState', 'buyState\BuyStateController@getState')->name('getState');

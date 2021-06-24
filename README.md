@@ -1,61 +1,105 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
 
-## About Laravel
+## Instalación
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Requiere PHP 7.2
+- Composer
+- NodeJS
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Clonar el proyecto
+    ~~~
+    git clone https://github.com/alejocarvajal/tienda-reactjs.git tienda-reactjs
+    ~~~
+- Acceder a la carpeta tienda-reactjs
+    ~~~
+    cd tienda-reactjs
+    ~~~
+- Instalar dependencias composer
+    ~~~
+    composer install
+    ~~~
+- Instalar dependencias npm
+    ~~~
+    npm install
+    npm run dev
+    ~~~
+- Crear el archivo .env con el contenido
+    ~~~
+    APP_NAME=Tienda-ReactJS
+    APP_ENV=local
+    APP_KEY=base64:UNxY4+L/TzZHx45NL2l+o7I990LnYfnmQGAHWDtX9ZI=
+    APP_DEBUG=true
+    APP_URL=http://localhost
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+    LOG_CHANNEL=stack
 
-## Learning Laravel
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=laravel
+    DB_USERNAME=root
+    DB_PASSWORD=
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+    BROADCAST_DRIVER=log
+    CACHE_DRIVER=file
+    QUEUE_CONNECTION=sync
+    SESSION_DRIVER=file
+    SESSION_LIFETIME=120
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+    REDIS_HOST=127.0.0.1
+    REDIS_PASSWORD=null
+    REDIS_PORT=6379
 
-## Laravel Sponsors
+    MAIL_MAILER=smtp
+    MAIL_HOST=smtp.mailtrap.io
+    MAIL_PORT=2525
+    MAIL_USERNAME=null
+    MAIL_PASSWORD=null
+    MAIL_ENCRYPTION=null
+    MAIL_FROM_ADDRESS=null
+    MAIL_FROM_NAME="${APP_NAME}"
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+    AWS_ACCESS_KEY_ID=
+    AWS_SECRET_ACCESS_KEY=
+    AWS_DEFAULT_REGION=us-east-1
+    AWS_BUCKET=
 
-### Premium Partners
+    PUSHER_APP_ID=
+    PUSHER_APP_KEY=
+    PUSHER_APP_SECRET=
+    PUSHER_APP_CLUSTER=mt1
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
+    MIX_PUSHER_APP_KEY="${PUSHER_APP_KEY}"
+    MIX_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
+    ~~~
+- Generar la llave de la aplicacion a través de un terminal
 
-## Contributing
+    ~~~
+    php artisan key:generate
+    ~~~
+## Ejecución
+- A través del terminal se ejecuta el comando:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    - php artisan serve
 
-## Code of Conduct
+ - Una vez ejecutado, ingresar a http://localhost:8000
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Datos de prueba
 
-## Security Vulnerabilities
+- Usuario:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    - email: test@test.com
+    - password: 12345
 
-## License
+- Pedido de consulta:
+    - 12345 / Aprobado
+    - 54321 / Rechazado
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Funcionamiento
+- Al registrar un nuevo usuario, automaticamente queda logueado.
+- Solo permite añadir metodo de pago a los clientes registrados.
+- Cuando se accede al carrito de compra:
+    - Si el cliente es Invitado, debe diligenciar el formulario de metodos de pago
+    - Si el cliente esta logueado, aparece diligenciado el formulario de metodo de pago
+ - Nota: Debido a que la aplicacion no tiene persistencia de datos, todo se manejó a través de la variable de SESSION, asumiento que es un protipo de prueba, por tal razon los datos de prueba para la consulta estan quemados, aunque la logica de los metodos permite agregar los modelos o llamados a APIS

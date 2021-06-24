@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Client;
 
+use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterClientRequest;
 use Illuminate\Http\Request;
@@ -29,7 +30,8 @@ class ClientController extends Controller
         if ($request->email == 'test@test.com' && Hash::check('12345', bcrypt($request->password))) {
             $request->session()->put('login', 'true');
             $request->session()->put('email', $request->email);
-            return view('layouts.main');
+            $cart = new CartController();
+            return $cart->index();
         } else {
             return view('login.index')->withErrors('Error: Intente de nuevo');
         }
@@ -56,7 +58,8 @@ class ClientController extends Controller
     public function register(Request $request)
     {
         if ($request->session()->exists('login')) {
-            return view('buystate.index');
+            $cart = new CartController();
+            return $cart->index();
         }
         return view('login.register');
     }
@@ -78,6 +81,7 @@ class ClientController extends Controller
         $request->session()->put('address', $request->address);
         $request->session()->put('login', 'true');
         //dd($request->session()->all());
-        return view('layouts.main');
+        $cart = new CartController();
+        return $cart->index();
     }
 }

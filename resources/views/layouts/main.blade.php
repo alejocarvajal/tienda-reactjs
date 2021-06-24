@@ -26,12 +26,12 @@
     <h5 class="my-0 mr-md-auto font-weight-normal">{{ config('app.name', 'TIENDA REACTJS') }}</h5>
     <nav class="my-2 my-md-0 mr-md-3">
         <a class="p-2 text-dark" href="{{ route('buyState') }}">Estado de Compra</a>
-        <a class="p-2 text-dark" href="#">Carrito de compra</a>
+        <a class="p-2 text-dark" href="{{ route('cart') }}">Carrito de compra</a>
     </nav>
     @if(!session()->has('login'))
-        <a class="btn btn-outline-primary" href="#">Invitado</a>
         <a class="btn btn-outline-success" href="{{ route('login') }}">Login</a>
         <a class="btn btn-outline-success" href="{{ route('register') }}">Registrarme</a>
+        <a class="p-2 text-dark" href="#">Hola Invitado!</a>
     @else
         <a class="p-2 text-dark" href="{{ route('registerPaymentMethod') }}">Registrar método de pago</a>
         <a class="p-2 text-dark" href="#">Hola {{session('email')}}!</a>

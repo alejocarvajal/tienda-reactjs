@@ -28,6 +28,10 @@ Route::post('/register', 'Client\ClientController@save')->name('register');
 Route::get('/registerPaymentMethod', 'PaymentMethod\PaymentMethodController@register')->name('registerPaymentMethod');
 Route::post('/registerPaymentMethod', 'PaymentMethod\PaymentMethodController@save')->name('registerPaymentMethod');
 
+//Cart routes
+Route::get('/cart', 'Cart\CartController@index')->name('cart');
+Route::post('/saveCart', 'Cart\CartController@save')->name('saveCart');
+
 //buyState routes
 Route::get('/buyState', 'buyState\BuyStateController@index')->name('buyState');
 Route::post('/buyState/getState', 'buyState\BuyStateController@getState')->name('getState');

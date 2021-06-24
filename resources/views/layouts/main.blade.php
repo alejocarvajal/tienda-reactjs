@@ -30,7 +30,14 @@
         <a class="p-2 text-dark" href="#">Support</a>
         <a class="p-2 text-dark" href="{{ route('buyState') }}">Estado de Compra</a>
     </nav>
-    <a class="btn btn-outline-primary" href="#">Sign up</a>
+    @if(!session()->has('login'))
+        <a class="btn btn-outline-primary" href="#">Invitado</a>
+        <a class="btn btn-outline-success" href="{{ route('login') }}">Login</a>
+        <a class="btn btn-outline-success" href="{{ route('register') }}">Registrarme</a>
+    @else
+        <a class="p-2 text-dark" href="#">Hola {{session('email')}}!</a>
+        <a class="p-2 text-dark" href="{{route('logout')}}">Cerrar sesión</a>
+    @endif
 </div>
 
 <div class="container">

@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('layouts.main');
 });
+
+//buyState routes
+Route::get('/buyState', 'buyState\BuyStateController@index')->name('buyState');
+Route::post('/buyState/getState', 'buyState\BuyStateController@getState')->name('getState');

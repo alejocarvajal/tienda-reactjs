@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Cart;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CartRequest;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
@@ -12,9 +14,9 @@ class CartController extends Controller
     public function index()
     {
         $products = $this->getProducts();
-        $creditcard = $this->getCreditCard();
+        $credit_card_data = $this->getCreditCard();
 
-        return view('cart.index', compact('products', 'creditcard'));
+        return view('cart.index', compact('products', 'credit_card_data'));
     }
 
     /**
@@ -26,10 +28,10 @@ class CartController extends Controller
     public function save()
     {
         $products = $this->getProducts();
-        $creditcard = $this->getCreditCard();
+        $credit_card_data = $this->getCreditCard();
         $idpedido = rand(1, 1000);
 
-        return view('cart.index', compact('products', 'creditcard', 'idpedido'));
+        return view('cart.index', compact('products', 'credit_card_data', 'idpedido'));
     }
 
     /**
@@ -67,12 +69,11 @@ class CartController extends Controller
      */
     private function getCreditCard()
     {
-        $creditcard = [
-            'creditcard_name' => Session::exists('creditcard_name') ? Session::get('creditcard_name') : '',
-            'creditcard_number' => Session::exists('creditcard_number') ? Session::get('creditcard_number') : '',
-            'creditcard_code' => Session::exists('creditcard_code') ? Session::get('creditcard_code') : '',
-            'creditcard_date' => Session::exists('creditcard_date') ? Session::get('creditcard_date') : '',
-        ];
+        $creditcard = null;
+        if (auth()->check()) {
+            $current_user = User::find(Auth::id());
+            $creditcard = $current_user->credit_card;
+        }
         return $creditcard;
     }
 }

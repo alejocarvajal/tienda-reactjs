@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\PaymentMethod;
 
+use App\CreditCard;
 use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterPaymentMethodRequest;
+use App\PaymentMethod;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class PaymentMethodController extends Controller
@@ -17,13 +21,18 @@ class PaymentMethodController extends Controller
      * @return View de registro o si ya esta logueado al listado de productos
      * @author  alejandro.carvajal <alejo.carvajal03@gmail.com>
      */
-    public function register() {
-        if (!Session::exists('login')) {
+    public function register()
+    {
+        if (auth()->check()) {
+            $current_user = User::find(Auth::id());
+            $credit_card_data = $current_user->credit_card;
+            return view('paymentmethod.register',compact('credit_card_data'));
+        } else {
             $cart = new CartController();
             return $cart->index();
         }
-        return view('paymentmethod.register');
     }
+
     /**
      * Metodo para registrar el metodo de pago
      *
@@ -31,20 +40,28 @@ class PaymentMethodController extends Controller
      * @return View listado de productos
      * @author  alejandro.carvajal <alejo.carvajal03@gmail.com>
      */
-    public function save(RegisterPaymentMethodRequest $request) {
-        if ($request->session()->exists('creditcard_number')) {
-            session([
-                'creditcard_name' => $request->creditcard_name,
-                'creditcard_number' => $request->creditcard_number,
-                'creditcard_code' => $request->creditcard_code,
-                'creditcard_date' => $request->creditcard_date,
+    public function store(RegisterPaymentMethodRequest $request)
+    {
+        $current_user = User::find(Auth::id());
+
+        if($current_user->credit_card()->count()) {
+            $current_user->credit_card()->update([
+                'name' => $request->creditcard_name,
+                'number' => $request->creditcard_number,
+                'code' => $request->creditcard_code,
+                'date' => $request->creditcard_date,
             ]);
-        }else {
-            $request->session()->put('creditcard_name', $request->creditcard_name);
-            $request->session()->put('creditcard_number', $request->creditcard_number);
-            $request->session()->put('creditcard_code', $request->creditcard_code);
-            $request->session()->put('creditcard_date', $request->creditcard_date);
+        }else{
+            $credit_card = CreditCard::create([
+                'name' => $request->creditcard_name,
+                'number' => $request->creditcard_number,
+                'code' => $request->creditcard_code,
+                'date' => $request->creditcard_date,
+            ]);
+            $current_user->credit_card_id = $credit_card->id;
+            $current_user->update();
         }
+
         $cart = new CartController();
         return $cart->index();
     }

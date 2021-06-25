@@ -15,18 +15,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Auth::routes();
-/*
 //Client routes
-Route::get('/login', 'Client\ClientController@index')->name('login');
-Route::post('/login', 'Client\ClientController@login')->name('login');
-Route::get('/logout', 'Client\ClientController@logout')->name('logout');
-Route::get('/register', 'Client\ClientController@register')->name('register');
-Route::post('/register', 'Client\ClientController@save')->name('register');*/
+Auth::routes();
 
 //Payment Method routes
 Route::get('/registerPaymentMethod', 'PaymentMethod\PaymentMethodController@register')->name('registerPaymentMethod');
-Route::post('/registerPaymentMethod', 'PaymentMethod\PaymentMethodController@save')->name('registerPaymentMethod');
+Route::post('/registerPaymentMethod', 'PaymentMethod\PaymentMethodController@store')->name('registerPaymentMethod');
 
 //Cart routes
 Route::get('/cart', 'Cart\CartController@index')->name('cart');

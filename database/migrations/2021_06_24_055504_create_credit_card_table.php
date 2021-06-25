@@ -21,6 +21,11 @@ class CreateCreditCardTable extends Migration
             $table->date('date');
             $table->timestamps();
         });
+        Schema::table('users', function (Blueprint $table) {
+
+            $table->unsignedBigInteger('credit_card_id')->nullable()->after('id');
+            $table->foreign('credit_card_id')->references('id')->on('credit_cards');
+        });
     }
 
     /**

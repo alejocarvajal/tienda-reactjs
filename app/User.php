@@ -41,8 +41,8 @@ class User extends Authenticatable
      * Tarjeta de credito asociada al usuario
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function creditCard()
+    public function credit_card()
     {
-        return $this->belongsToMany(CreditCard::class);
+        return $this->belongsTo(CreditCard::class);
     }
 }

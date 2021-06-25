@@ -77,6 +77,7 @@
 
     ~~~
     php artisan key:generate
+    php artisan migrate --seed
     ~~~
 ## Ejecución
 - A través del terminal se ejecuta el comando:
@@ -90,16 +91,5 @@
 - Usuario:
 
     - email: test@test.com
-    - password: 12345
+    - password: 12345678
 
-- Pedido de consulta:
-    - 12345 / Aprobado
-    - 54321 / Rechazado
-
-## Funcionamiento
-- Al registrar un nuevo usuario, automaticamente queda logueado.
-- Solo permite añadir metodo de pago a los clientes registrados.
-- Cuando se accede al carrito de compra:
-    - Si el cliente es Invitado, debe diligenciar el formulario de metodos de pago
-    - Si el cliente esta logueado, aparece diligenciado el formulario de metodo de pago
- - Nota: Debido a que la aplicacion no tiene persistencia de datos, todo se manejó a través de la variable de SESSION, asumiento que es un protipo de prueba, por tal razon los datos de prueba para la consulta estan quemados, aunque la logica de los metodos permite agregar los modelos o llamados a APIS

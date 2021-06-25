@@ -32,18 +32,20 @@
                             </thead>
                             <tbody>
                             <?php $subtotal = 0 ?>
-                            @foreach($products as $product)
-                                <?php
+                            @if(isset($products))
+                                @foreach($products as $product)
+                                    <?php
                                     $orden = $product->order_product_id;
                                     $subtotal = $subtotal + ($product->price * $product->quantity);
-                                ?>
-                                <tr>
-                                    <th>{{ $product->name }}</th>
-                                    <td>${{ number_format($product->price) }}</td>
-                                    <td>{{ $product->quantity }}</td>
-                                    <td>${{ number_format($product->price * $product->quantity) }}</td>
-                                </tr>
-                            @endforeach
+                                    ?>
+                                    <tr>
+                                        <th>{{ $product->name }}</th>
+                                        <td>${{ number_format($product->price) }}</td>
+                                        <td>{{ $product->quantity }}</td>
+                                        <td>${{ number_format($product->price * $product->quantity) }}</td>
+                                    </tr>
+                                @endforeach
+                            @endif
                             </tbody>
                             <tfoot>
                             <tr>
@@ -128,9 +130,11 @@
                             </div>
                             <div class="form-group row justify-content-center">
                                 <div class="col">
-                                    <input type="hidden" name='ordernumber' value="{{ $orden }}">
-                                    <button type="submit" class="btn btn-primary" id="register">Finalizar compra
-                                    </button>
+                                    @if(!empty($orden))
+                                        <input type="hidden" name='ordernumber' value="{{ $orden }}">
+                                        <button type="submit" class="btn btn-primary" id="register">Finalizar compra
+                                        </button>
+                                    @endif
                                 </div>
                             </div>
                         </form>

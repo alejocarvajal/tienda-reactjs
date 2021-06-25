@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Session;
 
 class PaymentMethodController extends Controller
 {
+
     /**
      * Metodo para llevar a la vista de registro
      *

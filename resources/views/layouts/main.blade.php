@@ -28,15 +28,15 @@
         <a class="p-2 text-dark" href="{{ route('buyState') }}">Estado de Compra</a>
         <a class="p-2 text-dark" href="{{ route('cart') }}">Carrito de compra</a>
     </nav>
-    @if(!session()->has('login'))
-        <a class="btn btn-outline-success" href="{{ route('login') }}">Login</a>
-        <a class="btn btn-outline-success" href="{{ route('register') }}">Registrarme</a>
-        <a class="p-2 text-dark" href="#">Hola Invitado!</a>
-    @else
-        <a class="p-2 text-dark" href="{{ route('registerPaymentMethod') }}">Registrar método de pago</a>
-        <a class="p-2 text-dark" href="#">Hola {{session('email')}}!</a>
-        <a class="p-2 text-dark" href="{{route('logout')}}">Cerrar sesión</a>
-    @endif
+    @guest
+    @endguest
+    <a class="btn btn-outline-success" href="{{ route('login') }}">Login</a>
+    <a class="btn btn-outline-success" href="{{ route('register') }}">Registrarme</a>
+    <a class="p-2 text-dark" href="#">Hola Invitado!</a>
+    <a class="p-2 text-dark" href="{{ route('registerPaymentMethod') }}">Registrar método de pago</a>
+    <a class="p-2 text-dark" href="#">Hola {{session('email')}}!</a>
+    <a class="p-2 text-dark" href="{{route('logout')}}">Cerrar sesión</a>
+
 </div>
 
 <div class="container">
@@ -47,7 +47,8 @@
     <footer class="pt-4 my-md-5 pt-md-5 border-top">
         <div class="row">
             <div class="col-12 col-md justify-content-center">
-                <small class="d-block mb-3 text-muted">&copy; Todos los derechos reservados. {{ config('app.name', 'TIENDA REACTJS') }}</small>
+                <small class="d-block mb-3 text-muted">&copy; Todos los derechos
+                    reservados. {{ config('app.name', 'TIENDA REACTJS') }}</small>
             </div>
     </footer>
 </div>

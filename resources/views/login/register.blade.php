@@ -45,7 +45,7 @@
         </div>
         <div class="form-group">
             <label for="address">Dirección*</label>
-            <input type="text" class="@error('lastname') is-invalid @enderror form-control" id="address"
+            <input type="text" class="@error('address') is-invalid @enderror form-control" id="address"
                    placeholder="Dirección" name="address" value="{{ old('address') }}">
             @error('address')
             <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>

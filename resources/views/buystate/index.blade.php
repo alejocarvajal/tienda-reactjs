@@ -11,11 +11,12 @@
                         <form id="buystate-form" class="text-center" method="POST" action="{{ route('getState') }}">
                             @csrf
                             <div class="form-group row">
-                                <label class="col-md-4 col-form-label text-md-right" for="idpedido">Número de pedido*</label>
+                                <label class="col-md-4 col-form-label text-md-right" for="idpedido">Número de
+                                    pedido*</label>
                                 <div class="col-md-6">
                                     <input type="text" class="@error('idpedido') is-invalid @enderror form-control"
                                            id="idpedido"
-                                           placeholder="Número de pedido" name="idpedido" value="{{ old('idpedido'),  $response['idpedido']}}">
+                                           placeholder="Número de pedido" name="idpedido" value="{{ old('idpedido')}}">
                                     @error('idpedido')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

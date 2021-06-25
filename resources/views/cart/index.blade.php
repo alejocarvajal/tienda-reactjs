@@ -11,11 +11,11 @@
                     <div class="card-header">Carrito de compra</div>
 
                     <div class="card-body">
-                        @if(!empty($idpedido))
+                        @if(!empty($final_order))
                             <div class="form-group">
                                 <p>Tu número de pedido es :
                                 <div id="ordernumber" class="alert alert-success">
-                                    {{ $idpedido }}
+                                    {{ $final_order}}
                                 </div>
                                 </p>
                             </div>
@@ -31,16 +31,28 @@
                             </tr>
                             </thead>
                             <tbody>
-
+                            <?php $subtotal = 0 ?>
                             @foreach($products as $product)
+                                <?php
+                                    $orden = $product->order_product_id;
+                                    $subtotal = $subtotal + ($product->price * $product->quantity);
+                                ?>
                                 <tr>
-                                    <th>{{ $product['product'] }}</th>
-                                    <td>${{ $product['price'] }}</td>
-                                    <td>{{ $product['quantity'] }}</td>
-                                    <td>${{ $product['total'] }}</td>
+                                    <th>{{ $product->name }}</th>
+                                    <td>${{ number_format($product->price) }}</td>
+                                    <td>{{ $product->quantity }}</td>
+                                    <td>${{ number_format($product->price * $product->quantity) }}</td>
                                 </tr>
                             @endforeach
                             </tbody>
+                            <tfoot>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th>Subtotal ${{ number_format($subtotal) }}</th>
+                            </tr>
+                            </tfoot>
                         </table>
 
                         <form id="register-form" class="text-center" method="POST" action="{{ route('saveCart') }}">
@@ -98,7 +110,8 @@
                                     <input type='text'
                                            class="@error('creditcard_date') is-invalid @enderror form-control"
                                            id="creditcard_date"
-                                           name="creditcard_date" value="{{ old('creditcard_date', isset($credit_card_data->date) ? $credit_card_data->date : '' ) }}"/>
+                                           name="creditcard_date"
+                                           value="{{ old('creditcard_date', isset($credit_card_data->date) ? $credit_card_data->date : '' ) }}"/>
                                     @error('creditcard_date')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -115,6 +128,7 @@
                             </div>
                             <div class="form-group row justify-content-center">
                                 <div class="col">
+                                    <input type="hidden" name='ordernumber' value="{{ $orden }}">
                                     <button type="submit" class="btn btn-primary" id="register">Finalizar compra
                                     </button>
                                 </div>

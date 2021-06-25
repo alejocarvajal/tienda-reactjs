@@ -46,9 +46,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('buyState') }}">Estado de compra</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('cart') }}">Carrito de compra</a>
-                    </li>
                     @guest
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('login') }}">Login</a>
@@ -59,6 +56,9 @@
                             </li>
                         @endif
                     @else
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('cart') }}">Carrito de compra</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('registerPaymentMethod') }}">Método de pago</a>
                         </li>

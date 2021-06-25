@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\buyState;
 
+use App\FinalOrder;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BuyStateRequest;
 use Illuminate\Http\Request;
@@ -22,23 +23,18 @@ class BuyStateController extends Controller
      */
     public function getState(BuyStateRequest $request)
     {
-        if($request->idpedido == 12345) {
+        $final_order = FinalOrder::find($request->idpedido);
+
+        if($final_order) {
+                $response = [
+                    'idpedido' => $request->idpedido,
+                    'message' => $final_order->status
+                ];
+        }else {
             $response = [
                 'idpedido' => $request->idpedido,
-                'status' => 1,
-                'message' => "Aprobado"
-            ];
-        }elseif ($request->idpedido == 54321) {
-            $response = [
-                'idpedido' => $request->idpedido,
-                'status' => 2,
-                'message' => "Rechazado"
-            ];
-        }else{
-            $response = [
-                'idpedido' => $request->idpedido,
-                'status' => 2,
-                'message' => "Sin resultados"
+                'error' => true,
+                'message' => 'Sin resultados'
             ];
         }
 

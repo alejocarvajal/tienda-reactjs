@@ -24,6 +24,7 @@ class CartRequest extends FormRequest
     public function rules()
     {
         return [
+            'ordernumber' => 'required',
             'creditcard_name' => 'required',
             'creditcard_number' => 'required',
             'creditcard_code' => 'required',
@@ -38,6 +39,7 @@ class CartRequest extends FormRequest
     public function messages()
     {
         return [
+            'ordernumber.required' => 'No se encontró orden asociada',
             'creditcard_name.required' => 'El campo es obligatorio.',
             'creditcard_number.required' => 'El campo es obligatorio.',
             'creditcard_code.required' => 'El campo es obligatorio.',

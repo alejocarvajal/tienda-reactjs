@@ -16,15 +16,20 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'HomeController@index')->name('home');
 
 //Client routes
-Auth::routes();
+Auth::routes(['reset' => false]);
 
-//Payment Method routes
-Route::get('/registerPaymentMethod', 'PaymentMethod\PaymentMethodController@register')->name('registerPaymentMethod');
-Route::post('/registerPaymentMethod', 'PaymentMethod\PaymentMethodController@store')->name('registerPaymentMethod');
+Route::group([
+    'middleware' => ['auth'],
+], function () {
+    //Payment Method routes
+    Route::get('/registerPaymentMethod', 'PaymentMethod\PaymentMethodController@register')->name('registerPaymentMethod');
+    Route::post('/registerPaymentMethod', 'PaymentMethod\PaymentMethodController@store')->name('registerPaymentMethod');
 
-//Cart routes
-Route::get('/cart', 'Cart\CartController@index')->name('cart');
-Route::post('/saveCart', 'Cart\CartController@save')->name('saveCart');
+    //Cart routes
+    Route::get('/cart', 'Cart\CartController@index')->name('cart');
+    Route::post('/saveCart', 'Cart\CartController@save')->name('saveCart');
+});
+
 
 //buyState routes
 Route::get('/buyState', 'buyState\BuyStateController@index')->name('buyState');

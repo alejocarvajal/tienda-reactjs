@@ -28,10 +28,18 @@ class BuyStateController extends Controller
 
         if ($order) {
             $order = $order->whereNotNull('status')->get();
-            $response = [
-                'idpedido' => $request->idpedido,
-                'message' => $order[0]->status
-            ];
+            if (!$order->isEmpty()) {
+                $response = [
+                    'idpedido' => $request->idpedido,
+                    'message' => $order[0]->status
+                ];
+            } else {
+                $response = [
+                    'idpedido' => $request->idpedido,
+                    'error' => true,
+                    'message' => 'Sin resultados'
+                ];
+            }
         } else {
             $response = [
                 'idpedido' => $request->idpedido,
@@ -39,7 +47,6 @@ class BuyStateController extends Controller
                 'message' => 'Sin resultados'
             ];
         }
-
         return view('buystate.index', compact('response'));
     }
 }

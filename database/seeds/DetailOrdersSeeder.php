@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class OrderProductSeeder extends Seeder
+class DetailOrdersSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,19 +11,17 @@ class OrderProductSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('order_products')->insert(
+        DB::table('detail_orders')->insert(
             [
                 [
-                    'quantity' => 1,
-                    'user_id' => 1,
+                    'order_id' => 1,
                     'product_id' => 1,
-                    'status' => 0
+                    'quantity' => 1
                 ],
                 [
-                    'quantity' => 2,
-                    'user_id' => 1,
+                    'order_id' => 1,
                     'product_id' => 2,
-                    'status' => 1,
+                    'quantity' => 2
                 ]
             ]);
     }

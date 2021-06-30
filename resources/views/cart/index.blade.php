@@ -11,11 +11,11 @@
                     <div class="card-header">Carrito de compra</div>
 
                     <div class="card-body">
-                        @if(!empty($final_order))
+                        @if($order->status)
                             <div class="form-group">
                                 <p>Tu número de pedido es :
                                 <div id="ordernumber" class="alert alert-success">
-                                    {{ $final_order}}
+                                    {{ $order->id}}
                                 </div>
                                 </p>
                             </div>
@@ -32,17 +32,16 @@
                             </thead>
                             <tbody>
                             <?php $subtotal = 0 ?>
-                            @if(isset($products))
-                                @foreach($products as $product)
+                            @if(isset($order))
+                                @foreach($order->products as $product)
                                     <?php
-                                    $orden = $product->order_product_id;
                                     $subtotal = $subtotal + ($product->price * $product->quantity);
                                     ?>
                                     <tr>
                                         <th>{{ $product->name }}</th>
                                         <td>${{ number_format($product->price) }}</td>
-                                        <td>{{ $product->quantity }}</td>
-                                        <td>${{ number_format($product->price * $product->quantity) }}</td>
+                                        <td>{{ $product->pivot->quantity }}</td>
+                                        <td>${{ number_format($product->price * $product->pivot->quantity) }}</td>
                                     </tr>
                                 @endforeach
                             @endif
@@ -51,8 +50,8 @@
                             <tr>
                                 <th></th>
                                 <th></th>
-                                <th></th>
-                                <th>Subtotal ${{ number_format($subtotal) }}</th>
+                                <th>Subtotal</th>
+                                <th>${{ number_format($order->total) }}</th>
                             </tr>
                             </tfoot>
                         </table>
@@ -67,7 +66,7 @@
                                            class="@error('creditcard_name') is-invalid @enderror form-control"
                                            id="creditcard_name"
                                            placeholder="Nombre en la tarjeta" name="creditcard_name"
-                                           value="{{ old('creditcard_name', isset($credit_card_data->name) ? $credit_card_data->name : '' ) }}">
+                                           value="{{ old('creditcard_name', isset($credit_card->name) ? $credit_card->name : '' ) }}">
                                     @error('creditcard_name')
                                     <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                                     @enderror
@@ -81,7 +80,7 @@
                                            class="@error('creditcard_number') is-invalid @enderror form-control"
                                            id="creditcard_number"
                                            placeholder="Número de la tarjeta" name="creditcard_number"
-                                           value="{{ old('creditcard_number', isset($credit_card_data->number) ? $credit_card_data->number : '' ) }}">
+                                           value="{{ old('creditcard_number', isset($credit_card->number) ? $credit_card->number : '' ) }}">
                                     @error('creditcard_number')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -97,7 +96,7 @@
                                            class="@error('creditcard_code') is-invalid @enderror form-control"
                                            id="creditcard_code"
                                            placeholder="Código de seguridad" name="creditcard_code"
-                                           value="{{ old('creditcard_code', isset($credit_card_data->code) ? $credit_card_data->code : '' ) }}">
+                                           value="{{ old('creditcard_code', isset($credit_card->code) ? $credit_card->code : '' ) }}">
                                     @error('creditcard_code')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -113,7 +112,7 @@
                                            class="@error('creditcard_date') is-invalid @enderror form-control"
                                            id="creditcard_date"
                                            name="creditcard_date"
-                                           value="{{ old('creditcard_date', isset($credit_card_data->date) ? $credit_card_data->date : '' ) }}"/>
+                                           value="{{ old('creditcard_date', isset($credit_card->date) ? $credit_card->date : '' ) }}"/>
                                     @error('creditcard_date')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -130,8 +129,8 @@
                             </div>
                             <div class="form-group row justify-content-center">
                                 <div class="col">
-                                    @if(!empty($orden))
-                                        <input type="hidden" name='ordernumber' value="{{ $orden }}">
+                                    @if(!$order->status)
+                                        <input type="hidden" name='ordernumber' value="{{ $order->id }}">
                                         <button type="submit" class="btn btn-primary" id="register">Finalizar compra
                                         </button>
                                     @endif

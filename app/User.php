@@ -45,4 +45,13 @@ class User extends Authenticatable
     {
         return $this->belongsTo(CreditCard::class);
     }
+
+    /**
+     * Orden asociada al usuario
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function Order()
+    {
+        return $this->hasOne(Order::class);
+    }
 }

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\buyState;
 
-use App\FinalOrder;
+use App\DetailOrder;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BuyStateRequest;
+use App\Order;
 use Illuminate\Http\Request;
 
 class BuyStateController extends Controller
@@ -23,14 +24,15 @@ class BuyStateController extends Controller
      */
     public function getState(BuyStateRequest $request)
     {
-        $final_order = FinalOrder::find($request->idpedido);
+        $order = Order::find($request->idpedido);
 
-        if($final_order) {
-                $response = [
-                    'idpedido' => $request->idpedido,
-                    'message' => $final_order->status
-                ];
-        }else {
+        if ($order) {
+            $order = $order->whereNotNull('status')->get();
+            $response = [
+                'idpedido' => $request->idpedido,
+                'message' => $order[0]->status
+            ];
+        } else {
             $response = [
                 'idpedido' => $request->idpedido,
                 'error' => true,

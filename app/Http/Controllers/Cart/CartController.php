@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers\Cart;
 
-use App\FinalOrder;
+use App\DetailOrder;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\PaymentMethod\PaymentMethodController;
 use App\Http\Requests\CartRequest;
-use App\OrderProduct;
+use App\Order;
 use App\User;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
@@ -21,63 +19,32 @@ class CartController extends Controller
 
     public function index()
     {
-        $products = $this->getProducts();
-        $credit_card_data = $this->getCreditCard();
+        $user = User::find(Auth::id());
+        $order = $user->Order;
+        $credit_card = $user->credit_card;
 
-        return view('cart.index', compact('products', 'credit_card_data'));
+        return view('cart.index', compact('order', 'credit_card'));
     }
 
     /**
      * Metodo para generar el id del pedido
      *
-     * @return View de productos
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View de productos
      * @author  alejandro.carvajal <alejo.carvajal03@gmail.com>
      */
     public function save(CartRequest $request)
     {
-        $final = new OrderProduct();
-        $final->FinalOrder();
-        $products = $this->getProducts();
-        $credit_card_data = $this->getCreditCard();
+        $order = Order::find($request->ordernumber);
+        $order->update(['status' => 'Pendiente']);
+        $order->save();
+        $paymentMethod = new PaymentMethodController();
+        $paymentMethod = $paymentMethod->createUpdateCreditCard($request);
 
-        if (!$final->FinalOrder()->count()) {
-            $final_order = FinalOrder::create([
-                'order_product_id' => $request->ordernumber
-            ])->id;
-        } else {
-            $final_order = $final->FinalOrder();
-            $final_order = $final_order[0]->id;
-        }
+        $credit_card = $paymentMethod->credit_card;
 
-        return view('cart.index', compact('products', 'credit_card_data', 'final_order'));
+
+        return view('cart.index', compact('order', 'credit_card'));
     }
 
-    /**
-     * Metodo para obtener el listado de pedidos
-     *
-     * @return Array de productos
-     * @author  alejandro.carvajal <alejo.carvajal03@gmail.com>
-     */
-    private function getProducts()
-    {
-        $products = new OrderProduct();
 
-        return $products->products();
-    }
-
-    /**
-     * Metodo para obtener tarjeta de credito si existe
-     *
-     * @return Array de datos tarjeta de credito
-     * @author  alejandro.carvajal <alejo.carvajal03@gmail.com>
-     */
-    private function getCreditCard()
-    {
-        $creditcard = null;
-        if (auth()->check()) {
-            $current_user = User::find(Auth::id());
-            $creditcard = $current_user->credit_card;
-        }
-        return $creditcard;
-    }
 }

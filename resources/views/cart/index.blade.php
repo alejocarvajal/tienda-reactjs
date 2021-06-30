@@ -11,7 +11,7 @@
                     <div class="card-header">Carrito de compra</div>
 
                     <div class="card-body">
-                        @if($order->status)
+                        @if(isset($order) && $order->status)
                             <div class="form-group">
                                 <p>Tu número de pedido es :
                                 <div id="ordernumber" class="alert alert-success">
@@ -20,19 +20,19 @@
                                 </p>
                             </div>
                         @endif
+                        @if(isset($order))
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Producto</th>
+                                    <th scope="col">Precio</th>
+                                    <th scope="col">Cantidad</th>
+                                    <th scope="col">Total</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php $subtotal = 0 ?>
 
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th scope="col">Producto</th>
-                                <th scope="col">Precio</th>
-                                <th scope="col">Cantidad</th>
-                                <th scope="col">Total</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php $subtotal = 0 ?>
-                            @if(isset($order))
                                 @foreach($order->products as $product)
                                     <?php
                                     $subtotal = $subtotal + ($product->price * $product->quantity);
@@ -44,17 +44,18 @@
                                         <td>${{ number_format($product->price * $product->pivot->quantity) }}</td>
                                     </tr>
                                 @endforeach
-                            @endif
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th>Subtotal</th>
-                                <th>${{ number_format($order->total) }}</th>
-                            </tr>
-                            </tfoot>
-                        </table>
+
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th>Subtotal</th>
+                                    <th>${{ number_format($order->total) }}</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        @endif
 
                         <form id="register-form" class="text-center" method="POST" action="{{ route('saveCart') }}">
                             @csrf
@@ -129,7 +130,7 @@
                             </div>
                             <div class="form-group row justify-content-center">
                                 <div class="col">
-                                    @if(!$order->status)
+                                    @if( isset($order) && !$order->status)
                                         <input type="hidden" name='ordernumber' value="{{ $order->id }}">
                                         <button type="submit" class="btn btn-primary" id="register">Finalizar compra
                                         </button>
